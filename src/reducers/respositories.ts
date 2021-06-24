@@ -3,17 +3,46 @@ interface RepositoriesState {
     error : string | null;
     data : Array<string>
 }
-interface Action {
-    type : string;
-    payload? : any;
+
+
+interface SearchRepoSuccessAction {
+    type : ActionType.SEARCH_REPO_SUCCESS;
+    payload : string[];
 }
-const reducer = (state:RepositoriesState,action:any) : RepositoriesState => {
+
+interface SearchRepoErrorAction {
+    type: ActionType.SEARCH_REPO_ERROR;
+    payload : string;
+}
+
+interface SearchRepoAction {
+    type: ActionType.SEARCH_REPO;
+}
+
+type Action =   
+| SearchRepoAction
+| SearchRepoErrorAction
+| SearchRepoSuccessAction
+
+
+enum ActionType {
+    SEARCH_REPO = 'search_repo',
+    SEARCH_REPO_SUCCESS = 'search_repo_success',
+    SEARCH_REPO_ERROR = 'search_repo_error''
+}
+
+
+const reducer = (
+    state:RepositoriesState,
+    action:Action
+
+    ) : RepositoriesState => {
     switch(action.type) {
-        case 'search_repo':
+        case ActionType.SEARCH_REPO:
             return {loading : true,error:null,data:[]}
-        case 'search_repo_success':
+        case ActionType.SEARCH_REPO_SUCCESS:
             return {loading : false,error:null,data: action.payload}
-        case 'search_repo_error';
+        case ActionType.SEARCH_REPO_ERROR:
             return {loading : false,error : action.payload,data : []} 
         default:
             return state; 
