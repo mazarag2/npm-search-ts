@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useActions } from '../hooks/useActions'
 
 
 
@@ -7,8 +7,11 @@ import { useDispatch } from 'react-redux';
 export const RepositoriesList: React.FC = () => {
 
     const [term,setTerm] = useState('');
+    const searchRepo = useActions();
+
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        searchRepo(term);
     }
 
     return (
